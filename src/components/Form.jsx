@@ -67,7 +67,7 @@ function Form() {
                 name='mortgageType'
                 value='repayment'
                 id='repayment'
-                className='absolute top-1/2 -translate-y-1/2 h-5 w-5'
+                className='absolute top-1/2 -translate-y-1/2 h-5 w-5 accent-[#95972e] opacity-70'
               />
               <label
                 htmlFor='repayment'
@@ -77,13 +77,13 @@ function Form() {
               </label>
             </div>
 
-            <div className='px-4 py-2 w-full border border-slate-500 rounded-md text-lg flex gap-4 relative hover:border-yellow transition-colors [&>input:checked]:bg-yellow'>
+            <div className='px-4 py-2 w-full border border-slate-500 rounded-md text-lg flex gap-4 relative hover:border-yellow transition-colors'>
               <input
                 type='radio'
                 name='mortgageType'
                 value='interestOnly'
                 id='interestOnly'
-                className='absolute top-1/2 -translate-y-1/2 h-5 w-5'
+                className='absolute top-1/2 -translate-y-1/2 h-5 w-5 accent-[#95972e] opacity-70 transition-colors'
               />
               <label
                 htmlFor='interestOnly'

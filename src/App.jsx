@@ -9,7 +9,7 @@ function App() {
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2'>
       <Calculator />
-      {results ? <Placeholder /> : <Results />}
+      {results ? <Results /> : <Placeholder />}
     </div>
   );
 }
