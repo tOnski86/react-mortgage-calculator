@@ -5,11 +5,34 @@ import iconCalculator from '/icon-calculator.svg';
 function Form() {
   return (
     <div>
-      <h2>Form</h2>
+      <form action='#'>
+        <div>
+          <label htmlFor='#'>Mortgage Amount</label>
+          <input type='text' name='' id='' />
+        </div>
 
-      <Button type='pill' icon={iconCalculator}>
-        Calculate Repayments
-      </Button>
+        <div>
+          <label htmlFor='#'>Mortgage Term</label>
+          <input type='text' name='' id='' />
+        </div>
+
+        <div>
+          <label htmlFor='#'>Interest Rate</label>
+          <input type='text' name='' id='' />
+        </div>
+
+        <div>
+          <input type='radio' name='mortgageType' value='repayment' />
+          <label htmlFor='#'>Repayment</label>
+
+          <input type='radio' name='mortgageType' value='interestOnly' />
+          <label htmlFor='#'>Interest Only</label>
+        </div>
+
+        <Button type='pill' icon={iconCalculator}>
+          Calculate Repayments
+        </Button>
+      </form>
     </div>
   );
 }
