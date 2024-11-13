@@ -16,7 +16,7 @@ function Form() {
             <div className='relative overflow-hidden'>
               <input
                 type='text'
-                className='peer pl-14 w-full border border-slate-500 px-4 py-2 rounded-md hover:cursor-pointer transition-colors hover:border-slate-900 focus:border-yellow focus-visible:outline-none font-bold text-slate-900 text-lg selection:bg-slate-700 selection:text-white'
+                className='peer pl-14 w-full border border-slate-500 px-4 py-2 rounded-md hover:cursor-pointer transition-colors hover:border-slate-900 focus:border-yellow focus-visible:outline-none font-bold text-slate-900 text-lg'
               />
               <span className='absolute bg-slate-100 top-1/2 -translate-y-1/2 left-[1px] p-[14px] leading-none rounded-tl-[5px] rounded-bl-[5px] box-content font-bold text-slate-700 peer-focus:bg-yellow transition-colors'>
                 £
@@ -33,7 +33,7 @@ function Form() {
             <div className='relative overflow-hidden'>
               <input
                 type='text'
-                className='peer pl-4 w-full border border-slate-500 px-4 py-2 rounded-md hover:cursor-pointer transition-colors hover:border-slate-900 focus:border-yellow focus-visible:outline-none font-bold text-slate-900 text-lg selection:bg-slate-700 selection:text-white'
+                className='peer pl-4 w-full border border-slate-500 px-4 py-2 rounded-md hover:cursor-pointer transition-colors hover:border-slate-900 focus:border-yellow focus-visible:outline-none font-bold text-slate-900 text-lg'
               />
               <span className='absolute bg-slate-100 top-1/2 -translate-y-1/2 right-[1px] p-[14px] leading-none rounded-tr-[5px] rounded-br-[5px] box-content font-bold text-slate-700 peer-focus:bg-yellow transition-colors'>
                 years
@@ -50,7 +50,7 @@ function Form() {
             <div className='relative overflow-hidden'>
               <input
                 type='text'
-                className='peer pl-4 w-full border border-slate-500 px-4 py-2 rounded-md hover:cursor-pointer transition-colors hover:border-slate-900 focus:border-yellow focus-visible:outline-none font-bold text-slate-900 text-lg selection:bg-slate-700 selection:text-white'
+                className='peer pl-4 w-full border border-slate-500 px-4 py-2 rounded-md hover:cursor-pointer transition-colors hover:border-slate-900 focus:border-yellow focus-visible:outline-none font-bold text-slate-900 text-lg'
               />
               <span className='absolute bg-slate-100 top-1/2 -translate-y-1/2 right-[1px] p-[14px] leading-none rounded-tr-[5px] rounded-br-[5px] box-content font-bold text-slate-700 peer-focus:bg-yellow transition-colors'>
                 %
