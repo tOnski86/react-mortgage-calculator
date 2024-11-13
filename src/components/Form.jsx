@@ -4,11 +4,11 @@ import iconCalculator from '/icon-calculator.svg';
 
 function Form() {
   return (
-    <div>
+    <div className='md:mt-6'>
       <form action='#' formNoValidate>
-        <div className='grid grid-cols-1 gap-6'>
+        <div className='grid grid-cols-1 gap-6 lg:grid-cols-2 md:gap-5'>
           {/* mortgage amount */}
-          <div className='flex flex-col gap-3'>
+          <div className='flex flex-col gap-3 lg:col-span-2'>
             <label htmlFor='#' className='text-slate-700 font-medium'>
               Mortgage Amount
             </label>
@@ -59,7 +59,7 @@ function Form() {
           </div>
 
           {/* mortgage type */}
-          <div className='flex flex-col gap-2.5'>
+          <div className='flex flex-col md:gap-2 gap-2.5 lg:col-span-2'>
             <label className='text-slate-700 font-medium'>Mortgage Type</label>
             <div className='px-4 py-2 w-full border border-slate-500 rounded-md text-lg flex gap-4 relative hover:border-yellow transition-colors'>
               <input
@@ -71,7 +71,7 @@ function Form() {
               />
               <label
                 htmlFor='repayment'
-                className='w-full hover:cursor-pointer px-8'
+                className='w-full hover:cursor-pointer px-8 font-bold text-slate-900 text-lg'
               >
                 Repayment
               </label>
@@ -87,7 +87,7 @@ function Form() {
               />
               <label
                 htmlFor='interestOnly'
-                className='w-full hover:cursor-pointer px-8'
+                className='w-full hover:cursor-pointer px-8 font-bold text-slate-900 text-lg'
               >
                 Interest Only
               </label>
@@ -96,7 +96,7 @@ function Form() {
         </div>
 
         {/* submit */}
-        <Button type='pill' icon={iconCalculator} className='mt-6 mb-2'>
+        <Button type='pill' icon={iconCalculator} className='mt-6 mb-2 md:mt-8'>
           Calculate Repayments
         </Button>
       </form>
@@ -105,26 +105,3 @@ function Form() {
 }
 
 export default Form;
-
-{
-  /* <div className='flex flex-col gap-2'>
-<label htmlFor='#' className='text-slate-700 font-medium'>
-  Mortgage Amount
-</label>
-<div className='relative overflow-hidden flex'>
-  <span className='pointer-events-none absolute font-bold text-slate-700 bg-slate-100 p-4 inset-y-0 left-0 flex items-center'>
-    £
-  </span>
-
-  <input
-    type='text'
-    name=''
-    id=''
-    className='pl-14 transition-colors rounded-md hover:cursor-pointer border-slate-500 focus:border-yellow focus:ring-0 hover:border-slate-900 w-full font-bold text-slate-900 text-lg'
-  />
-</div>
-</div> */
-}
-{
-  /* <span className=' h-4 w-4 border border-slate-500 rounded-full inline-block absolute top-1/2 -translate-y-1/2 left-0 after:absolute after:block after:h-2.5 after:w-2.5 after:rounded-full after:top-1/2 after:-translate-y-1/2 after:-translate-x-1/2 after:left-1/2 after:bg-slate-500 after:transition-opacity after:opacity-0'></span> */
-}
