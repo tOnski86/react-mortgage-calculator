@@ -1,8 +1,34 @@
+import { useReducer } from 'react';
 import Button from './Button';
 
 import iconCalculator from '/icon-calculator.svg';
 
+const initState = {
+  amount: '',
+  term: '',
+  rate: '',
+  type: '',
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'setAmount':
+      return { ...state, amount: action.payload };
+    case 'setTerm':
+      return { ...state, term: action.payload };
+    case 'setRate':
+      return { ...state, rate: action.payload };
+    case 'setType':
+      return { ...state, type: action.payload };
+    default:
+      return 'Action not found';
+  }
+}
+
 function Form() {
+  const [state, dispatch] = useReducer(reducer, initState);
+  const { amount, term, rate } = state;
+
   return (
     <div className='md:mt-6'>
       <form action='#' formNoValidate>
@@ -16,6 +42,13 @@ function Form() {
             <div className='relative overflow-hidden'>
               <input
                 type='text'
+                value={amount}
+                onChange={e =>
+                  dispatch({
+                    type: 'setAmount',
+                    payload: Number(e.target.value),
+                  })
+                }
                 className='peer pl-14 w-full border border-slate-500 px-4 py-2 rounded-md hover:cursor-pointer transition-colors hover:border-slate-900 focus:border-yellow focus-visible:outline-none font-bold text-slate-900 text-lg'
               />
               <span className='absolute bg-slate-100 top-1/2 -translate-y-1/2 left-[1px] p-[14px] leading-none rounded-tl-[5px] rounded-bl-[5px] box-content font-bold text-slate-700 peer-focus:bg-yellow transition-colors'>
@@ -33,6 +66,10 @@ function Form() {
             <div className='relative overflow-hidden'>
               <input
                 type='text'
+                value={term}
+                onChange={e =>
+                  dispatch({ type: 'setTerm', payload: Number(e.target.value) })
+                }
                 className='peer pl-4 w-full border border-slate-500 px-4 py-2 rounded-md hover:cursor-pointer transition-colors hover:border-slate-900 focus:border-yellow focus-visible:outline-none font-bold text-slate-900 text-lg'
               />
               <span className='absolute bg-slate-100 top-1/2 -translate-y-1/2 right-[1px] p-[14px] leading-none rounded-tr-[5px] rounded-br-[5px] box-content font-bold text-slate-700 peer-focus:bg-yellow transition-colors'>
@@ -50,6 +87,13 @@ function Form() {
             <div className='relative overflow-hidden'>
               <input
                 type='text'
+                value={rate}
+                onChange={e =>
+                  dispatch({
+                    type: 'setRate',
+                    payload: Number(e.target.value),
+                  })
+                }
                 className='peer pl-4 w-full border border-slate-500 px-4 py-2 rounded-md hover:cursor-pointer transition-colors hover:border-slate-900 focus:border-yellow focus-visible:outline-none font-bold text-slate-900 text-lg'
               />
               <span className='absolute bg-slate-100 top-1/2 -translate-y-1/2 right-[1px] p-[14px] leading-none rounded-tr-[5px] rounded-br-[5px] box-content font-bold text-slate-700 peer-focus:bg-yellow transition-colors'>
@@ -65,9 +109,12 @@ function Form() {
               <input
                 type='radio'
                 name='mortgageType'
-                value='repayment'
                 id='repayment'
-                className='absolute top-1/2 -translate-y-1/2 h-5 w-5 accent-[#95972e] opacity-70'
+                value='repayment'
+                onChange={e =>
+                  dispatch({ type: 'setType', payload: e.target.value })
+                }
+                className='absolute top-1/2 -translate-y-1/2 h-5 w-5 accent-[#95972e] opacity-70 transition-all'
               />
               <label
                 htmlFor='repayment'
@@ -81,9 +128,12 @@ function Form() {
               <input
                 type='radio'
                 name='mortgageType'
-                value='interestOnly'
                 id='interestOnly'
-                className='absolute top-1/2 -translate-y-1/2 h-5 w-5 accent-[#95972e] opacity-70 transition-colors'
+                value='interestOnly'
+                onChange={e =>
+                  dispatch({ type: 'setType', payload: e.target.value })
+                }
+                className='absolute top-1/2 -translate-y-1/2 h-5 w-5 accent-[#95972e] opacity-70'
               />
               <label
                 htmlFor='interestOnly'
