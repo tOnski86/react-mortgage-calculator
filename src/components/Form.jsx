@@ -8,7 +8,31 @@ const initState = {
   term: '',
   rate: '',
   type: '',
+  result: {},
 };
+
+const MONTHS_IN_YEAR = 12;
+
+function calculateMortgage(amount, rate, term, type) {
+  const monthlyRate = rate / 100 / MONTHS_IN_YEAR;
+  const payments = term * MONTHS_IN_YEAR;
+
+  if (type === 'repayment') {
+    const factor = Math.pow(1 + monthlyRate, payments);
+    const monthlyRepayment = (amount * monthlyRate * factor) / (factor - 1);
+    return {
+      monthly: Number(monthlyRepayment.toFixed(2)),
+      total: Number((monthlyRepayment * payments).toFixed(2)),
+    };
+  }
+  if (type === 'interestOnly') {
+    const monthlyRepayment = amount * monthlyRate;
+    return {
+      monthly: Number(monthlyRepayment.toFixed(2)),
+      total: Number((monthlyRepayment * payments).toFixed(2)),
+    };
+  }
+}
 
 function reducer(state, action) {
   switch (action.type) {
@@ -20,6 +44,22 @@ function reducer(state, action) {
       return { ...state, rate: action.payload };
     case 'setType':
       return { ...state, type: action.payload };
+    case 'calculate':
+      // implement state change for changing <Placeholder/> to <Results/>
+      return {
+        ...state,
+        result: calculateMortgage(
+          state.amount,
+          state.rate,
+          state.term,
+          state.type
+        ),
+      };
+    // implement clear for <Calculator/>
+    case 'clear':
+      return initState;
+    // implement case 'totals for <Results/>
+
     default:
       return 'Action not found';
   }
@@ -41,7 +81,7 @@ function Form() {
 
             <div className='relative overflow-hidden'>
               <input
-                type='text'
+                type='number'
                 value={amount}
                 onChange={e =>
                   dispatch({
@@ -65,7 +105,7 @@ function Form() {
 
             <div className='relative overflow-hidden'>
               <input
-                type='text'
+                type='number'
                 value={term}
                 onChange={e =>
                   dispatch({ type: 'setTerm', payload: Number(e.target.value) })
@@ -86,7 +126,7 @@ function Form() {
 
             <div className='relative overflow-hidden'>
               <input
-                type='text'
+                type='number'
                 value={rate}
                 onChange={e =>
                   dispatch({
@@ -146,7 +186,15 @@ function Form() {
         </div>
 
         {/* submit */}
-        <Button type='pill' icon={iconCalculator} className='mt-6 mb-2 md:mt-8'>
+        <Button
+          type='pill'
+          onClick={e => {
+            e.preventDefault();
+            dispatch({ type: 'calculate' });
+          }}
+          icon={iconCalculator}
+          className='mt-6 mb-2 md:mt-8'
+        >
           Calculate Repayments
         </Button>
       </form>
