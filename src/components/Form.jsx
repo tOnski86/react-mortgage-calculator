@@ -10,6 +10,7 @@ const initialState = {
   rate: '',
   type: '',
   result: {},
+  clear: false,
 };
 
 const MONTHS_IN_YEAR = 12;
@@ -41,6 +42,9 @@ function reducer(state, action) {
     case 'setType':
       return { ...state, type: action.payload };
     case 'calculate':
+      if (!state.amount || !state.rate || !state.term || !state.type)
+        return state;
+
       return {
         ...state,
         result: calculateMortgage(
@@ -49,11 +53,12 @@ function reducer(state, action) {
           state.term,
           state.type
         ),
+        clear: true,
       };
     // implement clear for <Calculator/> to be passed to button
     case 'clear':
+      if (action.payload !== 'clearButton') return;
       return initialState;
-    // implement case 'totals for <Results/>
 
     default:
       return 'Action not found';
@@ -62,7 +67,7 @@ function reducer(state, action) {
 
 function Form({ onResult }) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { amount, rate, term, type, result } = state;
+  const { amount, rate, term, type, result, clear } = state;
 
   useEffect(() => {
     function handleFormEntry() {
@@ -73,8 +78,28 @@ function Form({ onResult }) {
     handleFormEntry();
   }, [onResult, amount, rate, term, type, result, state]);
 
+  useEffect(() => {
+    function handleClear() {
+      !clear && onResult(false);
+    }
+    handleClear();
+  });
+
   return (
     <div className='md:mt-6'>
+      <div className='lg:flex lg:items-center lg:justify-between gap-2 md:mb-6'>
+        <h2 className='text-slate-900 text-2xl font-bold mb-1 sm:mb-0'>
+          Mortgage Calculator
+        </h2>
+        <Button
+          type='text'
+          className='mt-1 mb-6 md:mb-0'
+          onClick={() => dispatch({ type: 'clear', payload: 'clearButton' })}
+        >
+          Clear All
+        </Button>
+      </div>
+
       <form action='#' formNoValidate>
         <div className='grid grid-cols-1 gap-6 lg:grid-cols-2 md:gap-5'>
           {/* mortgage amount */}
@@ -154,6 +179,7 @@ function Form({ onResult }) {
                 type='radio'
                 name='mortgageType'
                 id='repayment'
+                checked={type === 'repayment'}
                 value='repayment'
                 onChange={e =>
                   dispatch({ type: 'setType', payload: e.target.value })
@@ -173,6 +199,7 @@ function Form({ onResult }) {
                 type='radio'
                 name='mortgageType'
                 id='interestOnly'
+                checked={type === 'interestOnly'}
                 value='interestOnly'
                 onChange={e =>
                   dispatch({ type: 'setType', payload: e.target.value })
@@ -194,7 +221,7 @@ function Form({ onResult }) {
           type='pill'
           onClick={e => {
             e.preventDefault();
-            dispatch({ type: 'calculate' });
+            dispatch({ type: 'calculate', payload: 'calculateButton' });
           }}
           icon={iconCalculator}
           className='mt-6 mb-2 md:mt-8'
