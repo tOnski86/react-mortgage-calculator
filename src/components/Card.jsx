@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-function Card({ result }) {
-  const { monthly, total } = result;
+function Card({ calculateMortgage }) {
+  const { monthly, total } = calculateMortgage;
 
   return (
     <div className='[&>:not(:last-child)]:border-b-[1px] [&>:not(:last-child)]:border-b-slate-700/40 bg-[#0E2431] px-4 py-6 rounded-lg border-t-4 border-t-yellow'>
