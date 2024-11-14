@@ -31,18 +31,28 @@ function Form({ onResult, onCalculateMortgage }) {
 
   const userEntry = { amount, term, rate, type };
 
-  function submitFormEntry() {
-    if (Object.values(userEntry).every(entry => entry !== '')) {
-      onCalculateMortgage(calculateMortgage(userEntry));
-      onResult(true);
-    }
-  }
   function clearFormEntry() {
     setAmount('');
     setTerm('');
     setRate('');
     setType('');
     onResult(false);
+  }
+
+  function handleValidation() {
+    !amount && setAmount(false);
+    !term && setTerm(false);
+    !rate && setRate(false);
+    !type && setType(false);
+
+    if (Object.values(userEntry).some(entry => entry === '' || entry === false))
+      return;
+    submitFormEntry();
+  }
+
+  function submitFormEntry() {
+    onCalculateMortgage(calculateMortgage(userEntry));
+    onResult(true);
   }
 
   return (
@@ -79,7 +89,7 @@ function Form({ onResult, onCalculateMortgage }) {
                 £
               </span>
             </div>
-            {amount && <Error />}
+            {amount === false && <Error />}
           </div>
 
           {/* mortgage term */}
@@ -99,6 +109,7 @@ function Form({ onResult, onCalculateMortgage }) {
                 years
               </span>
             </div>
+            {term === false && <Error />}
           </div>
 
           {/* interest only */}
@@ -118,6 +129,7 @@ function Form({ onResult, onCalculateMortgage }) {
                 %
               </span>
             </div>
+            {rate === false && <Error />}
           </div>
 
           {/* mortgage type */}
@@ -158,6 +170,7 @@ function Form({ onResult, onCalculateMortgage }) {
                 Interest Only
               </label>
             </div>
+            {type === false && <Error />}
           </div>
         </div>
 
@@ -168,7 +181,7 @@ function Form({ onResult, onCalculateMortgage }) {
           className='mt-6 mb-2 md:mt-8'
           onClick={e => {
             e.preventDefault();
-            submitFormEntry();
+            handleValidation();
           }}
         >
           Calculate Repayments
