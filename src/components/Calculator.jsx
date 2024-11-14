@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import Button from './Button';
 import Form from './Form';
 
-function Calculator() {
+function Calculator({ onResult }) {
   return (
     <div className='bg-white px-6 py-8 md:px-10'>
       <div className='lg:flex lg:items-center lg:justify-between gap-2'>
@@ -12,7 +13,7 @@ function Calculator() {
           Clear All
         </Button>
       </div>
-      <Form />
+      <Form onResult={onResult} />
     </div>
   );
 }

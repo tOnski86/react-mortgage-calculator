@@ -1,9 +1,10 @@
-import { useReducer } from 'react';
+/* eslint-disable react/prop-types */
+import { useEffect, useReducer } from 'react';
 import Button from './Button';
 
 import iconCalculator from '/icon-calculator.svg';
 
-const initState = {
+const initialState = {
   amount: '',
   term: '',
   rate: '',
@@ -16,22 +17,17 @@ const MONTHS_IN_YEAR = 12;
 function calculateMortgage(amount, rate, term, type) {
   const monthlyRate = rate / 100 / MONTHS_IN_YEAR;
   const payments = term * MONTHS_IN_YEAR;
+  const factor = Math.pow(1 + monthlyRate, payments);
 
-  if (type === 'repayment') {
-    const factor = Math.pow(1 + monthlyRate, payments);
-    const monthlyRepayment = (amount * monthlyRate * factor) / (factor - 1);
-    return {
-      monthly: Number(monthlyRepayment.toFixed(2)),
-      total: Number((monthlyRepayment * payments).toFixed(2)),
-    };
-  }
-  if (type === 'interestOnly') {
-    const monthlyRepayment = amount * monthlyRate;
-    return {
-      monthly: Number(monthlyRepayment.toFixed(2)),
-      total: Number((monthlyRepayment * payments).toFixed(2)),
-    };
-  }
+  const monthlyRepayment =
+    type === 'repayment'
+      ? (amount * monthlyRate * factor) / (factor - 1)
+      : amount * monthlyRate;
+
+  return {
+    monthly: Number(monthlyRepayment.toFixed(2)),
+    total: Number((monthlyRepayment * payments).toFixed(2)),
+  };
 }
 
 function reducer(state, action) {
@@ -45,7 +41,6 @@ function reducer(state, action) {
     case 'setType':
       return { ...state, type: action.payload };
     case 'calculate':
-      // implement state change for changing <Placeholder/> to <Results/>
       return {
         ...state,
         result: calculateMortgage(
@@ -55,9 +50,9 @@ function reducer(state, action) {
           state.type
         ),
       };
-    // implement clear for <Calculator/>
+    // implement clear for <Calculator/> to be passed to button
     case 'clear':
-      return initState;
+      return initialState;
     // implement case 'totals for <Results/>
 
     default:
@@ -65,9 +60,18 @@ function reducer(state, action) {
   }
 }
 
-function Form() {
-  const [state, dispatch] = useReducer(reducer, initState);
-  const { amount, term, rate } = state;
+function Form({ onResult }) {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { amount, rate, term, type, result } = state;
+
+  useEffect(() => {
+    function handleFormEntry() {
+      if (!amount || !rate || !term || !type || !Object.keys(result).length)
+        return;
+      onResult(state);
+    }
+    handleFormEntry();
+  }, [onResult, amount, rate, term, type, result, state]);
 
   return (
     <div className='md:mt-6'>
